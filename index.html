@@ -48,21 +48,20 @@
 				temperature_text = "warm";
 				emoji_image_src = "images/face1.png"
 			}
-			
 			var quality_element = $( ".quality" );
 			if (ecoli_count < 41) {
-				quality_element.append( "very clean" );
+				quality_element.append( "and fresh" );
 				$('body').css({"background-color": '#43a4ea'});						
 			} else if (ecoli_count <200 ) {
-				quality_element.append( "clean" );
+				quality_element.append( "and swimmable" );
 				$('body').css({"background-color": '#2ECE9A'});						
 			} else if (ecoli_count <406 ) {
 				emoji_image_src = "images/face3.png"				
-				quality_element.append( "swimmable" );
+				quality_element.append( "but a bit funky" );
 				$('body').css({"background-color": '#A4CE2E'});						
 			} else {
 				emoji_image_src = "images/face4.png"
-				quality_element.append( "not clean" );
+				quality_element.append( "but not fit for swimming" );
 				$('body').css({"background-color": '#cc0909'});												
 			}
 			
@@ -80,7 +79,7 @@
       <header>
 		<img class="emoji" style="margin: auto; display: block;"></img>
 		<div style="text-align: center;"> <span class="temperature" style="font-size: 48pt;"></span></div>
-		<div class="title" style="font-size: 24pt; text-align: center;">The Willamette is <br/><span class="temperature_text"></span> and <span class="quality"></span>!</div>
+		<div class="title" style="font-size: 24pt; text-align: center;">The Willamette is <br/><span class="temperature_text"></span> <span class="quality"></span>!</div>
       </header>
 	  </span>
       <span class="footer-wrapper">
@@ -94,7 +93,7 @@
 		<div class="footer_text">
 			<p>Isn't the Willamette kinda gnarly? <a href="http://www.humanaccessproject.com/about/willamette_river_water_quality">Nope.</a></p>
         	<p>This site was created by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
-			 <p>Data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a> and <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a>.</p>
+			 <p>Temperature and bacteria data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a> and <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a>.</p>
 		 </div>
     </footer>
 	</span>

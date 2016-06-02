@@ -41,7 +41,7 @@ def get_most_recent_dt_and_value(rows, key):
     row = max([r for r in rows if r.get(key, '') != ''], key=lambda r: r['dt'])
     return row['dt'], row[key]
 
-rows = reversed(sorted(list(getrows(), key=lambda r: r['dt']))
+rows = list(getrows())
 
 
 def gen_bes_ecoli(url, rank=0):
@@ -113,7 +113,7 @@ data = {
     'cyanobacteria_date': str(cydt),
 }
 
-with open('data.json', 'w') as f
+with open('data.json', 'w') as f:
     json.dump(data, f)
 
 s3 = boto.connect_s3()

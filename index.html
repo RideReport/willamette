@@ -12,9 +12,10 @@
 	  <script>
 		$(document).ready(function () {
 		 $.getJSON('https://s3-us-west-2.amazonaws.com/howsthewater/data.json', function (data) {
+			 var temperature_fahrenheit;
+			 var ecoli_count;
+			 
 			 for (var key in data) {
-				var value = data[key];
-				var element = $( ".quality" );
 				
 				if (key == "ecoli") {
 					// These thresholds are based on the values given by the WHO for 'Very Good', 'Good', 'Poor' and 'Very Poor' 
@@ -22,39 +23,45 @@
 					// to 406 (the maximum allowed value for safe swimming according to Oregon DEQ).
 					// Sources: http://www.who.int/water_sanitation_health/bathing/srwe1-chap4.pdf
 					// 			http://www.portlandoregon.gov/bes/article/390127
-					if (value < 41) {
-						element.append( "\<font color='#009a44'>very clean!\</font>" );
-					} else if (value <200 ) {
-						element.append( "\<font color='#98e116'>clean.\</font>" );
-					} else if (value <406 ) {
-						element.append( "\<font color='#ecb713'>swimmable.\</font>" );
-					} else {
-						element.append( "\<font color='#cc0909'>not clean. Stay out!\</font>" );
-					}
+					ecoli_count = data[key];
 				} else if (key == "ecoli_date") {
 					//
-				} else if (key == "temperature_celcius") {
-					var element = $( ".temperature" );
-					var emoji_element = $( ".emoji" );
-					
-					var fahrenheit = (value * 1.8 + 32).toFixed(0);
-					if (fahrenheit < 55) { // nope nope nope
-						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉\</font>" );
-						emoji_element.append("😲");
-					} else if (fahrenheit < 61 ) { // brrr
-						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉\</font>" );
-						emoji_element.append("😬");
-					} else if (fahrenheit < 72 ) { // cool
-						element.append(fahrenheit + "℉");
-						emoji_element.append("😆");						
-					} else { // warm!
-						element.append(fahrenheit + "℉");
-						emoji_element.append("😎");						
-					} 
+				} else if (key == "temperature_celcius") {					
+					temperature_fahrenheit = (data[key] * 1.8 + 32).toFixed(0);
 				} else if (key == "temperature_date") {
 					//
 				}
 			  };
+			  
+			var quality_element = $( ".quality" );
+			if (ecoli_count < 41) {
+				quality_element.append( "very clean!" );
+				$('body').css({"background-color": '#019A01'});						
+			} else if (ecoli_count <200 ) {
+				quality_element.append( "clean." );
+				$('body').css({"background-color": '#7ac143'});						
+			} else if (ecoli_count <406 ) {
+				quality_element.append( "swimmable." );
+				$('body').css({"background-color": '#ecb713'});						
+			} else {
+				quality_element.append( "not clean." );
+				$('body').css({"background-color": '#cc0909'});												
+			}
+			
+			var emoji_element = $( ".emoji" );
+			
+			$( ".temperature" ).append(temperature_fahrenheit + "℉");
+			
+			if (temperature_fahrenheit < 55 || ecoli_count > 406) { // nope nope nope
+				emoji_element.append("😲");
+			} else if (temperature_fahrenheit < 61 || ecoli_count > 200 ) { // brrr
+				emoji_element.append("😬");
+			} else if (temperature_fahrenheit < 72 ) { // cool
+				emoji_element.append("😆");						
+			} else { // warm!
+				emoji_element.append("😎");						
+			} 
+			  	
 		  });
 	  });
 	</script>
@@ -70,7 +77,7 @@
       <footer>
 		<span style="float:left; text-align: center;">
 		<a href="https://donate.humanaccessproject.com">
-  		<img width="100px" src="images/HAP_logo.jpg"/><br/>
+  		<img width="100px" src="images/HAP_logo.png"/><br/>
 		Donate!
 		</a>
 		</span>

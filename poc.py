@@ -6,7 +6,10 @@ from bs4 import BeautifulSoup
 import pytz
 import boto
 import json
+import os
 pacific = pytz.timezone('US/Pacific')
+
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 def getrows(dt=None):
     if dt is None:
@@ -38,7 +41,7 @@ def get_most_recent_dt_and_value(rows, key):
     row = max([r for r in rows if r.get(key, '') != ''], key=lambda r: r['dt'])
     return row['dt'], row[key]
 
-rows = list(getrows())
+rows = reversed(sorted(list(getrows(), key=lambda r: r['dt']))
 
 
 def gen_bes_ecoli(url, rank=0):
@@ -76,6 +79,18 @@ def gen_bes_ecoli(url, rank=0):
             'name': name,
         }
 
+def get_nearby_algae_bloom_advisories():
+    with open(os.path.join(SCRIPT_DIR, 'willamette-zone.wkt')) as f:
+        poly_wkt = f.read()
+    url = 'https://data.oregon.gov/resource/hbyw-ngxj.json'
+    query = {
+        '$where': 'within_polygon(location, "{}")'.format(poly_wkt),
+    }
+    response = requests.get(url, params=query)
+    response.raise_for_status()
+    results = response.json()
+    return results
+
 boathouse = list(gen_bes_ecoli('http://www.portlandoregon.gov/bes/waterquality/results.cfm?location_id=7131', 2))
 morrison = list(gen_bes_ecoli('http://www.portlandoregon.gov/bes/waterquality/results.cfm?location_id=1727', 1))
 marina = list(gen_bes_ecoli('http://www.portlandoregon.gov/bes/waterquality/results.cfm?location_id=7132', 0))
@@ -83,7 +98,6 @@ marina = list(gen_bes_ecoli('http://www.portlandoregon.gov/bes/waterquality/resu
 from itertools import chain
 ecoli = max(chain(boathouse, morrison, marina), key=lambda r: (r['dt'], r['rank']))
 
-datafile = open('data.json', 'w')
 TCdt, TC = get_most_recent_dt_and_value(rows, '01_00010')
 tbdt, tb = get_most_recent_dt_and_value(rows, '38_63680')
 cydt, cy = get_most_recent_dt_and_value(rows, '52_95204')
@@ -99,7 +113,8 @@ data = {
     'cyanobacteria_date': str(cydt),
 }
 
-json.dump(data, datafile)
+with open('data.json', 'w') as f
+    json.dump(data, f)
 
 s3 = boto.connect_s3()
 key = s3.get_bucket('howsthewater').new_key('data.json')

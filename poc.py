@@ -4,6 +4,7 @@ import dateutil.parser
 from bs4 import BeautifulSoup
 import pytz
 import boto
+import json
 pacific = pytz.timezone('US/Pacific')
 
 def getrows():
@@ -79,14 +80,22 @@ from itertools import chain
 ecoli = max(chain(boathouse, morrison, marina), key=lambda r: (r['dt'], r['rank']))
 
 datafile = open('data.json', 'w')
+TCdt, TC = get_most_recent_dt_and_value(rows, '01_00010')
+tbdt, tb = get_most_recent_dt_and_value(rows, '38_63680')
+cydt, cy = get_most_recent_dt_and_value(rows, '52_95204')
 
-datafile.write("{")
-datafile.write("'temperature_celcius': {1:5}, 'temperature_date': {0},".format(*get_most_recent_dt_and_value(rows, '01_00010')))
-datafile.write("'turbidity': {1:5}, 'turbidity_date': {0},".format(*get_most_recent_dt_and_value(rows, '38_63680')))
-datafile.write("'cyanobacteria': {1:5}, 'cyanobacteria_date': {0},".format(*get_most_recent_dt_and_value(rows, '52_95204')))
-datafile.write("'ecoli': {ecoli:5}, 'ecoli_date': {dt}, ecoli_site: {name}".format(**ecoli))
-datafile.write("}")
-datafile.close()
+data = {
+    'temperature_celcius': float(TC),
+    'temperature_date': str(TCdt),
+    'turbidity': float(tb),
+    'turbidity_date': str(tbdt),
+    'ecoli': float(ecoli['ecoli']),
+    'ecoli_date': str(ecoli['dt']),
+    'cyanobacteria': float(cy),
+    'cyanobacteria_date': str(cydt),
+}
+
+json.dump(data, datafile)
 
 s3 = boto.connect_s3()
 key = s3.get_bucket('howsthewater').new_key('data.json')

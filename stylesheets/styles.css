@@ -158,6 +158,8 @@ img {
 }
 
 header {
+  position: relative;
+  top: 30%;
   width:400px;
   float:left;
   position:fixed;

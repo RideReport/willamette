@@ -191,7 +191,7 @@ footer {
   font-size: 12px;
   opacity: 0.8;
   position:fixed;
-  bottom:50px;
+  bottom:10px;
   -webkit-font-smoothing:subpixel-antialiased;
 }
 
@@ -219,10 +219,6 @@ footer a {
     float:none;
     position:static;
     width:auto;
-  }
-  
-  footer {
-	  bottom:10px;
   }
 
   header {

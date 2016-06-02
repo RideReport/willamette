@@ -160,6 +160,14 @@ footer a {
       position:static;
       width:auto;
     }
+	
+    .temperature {
+    	font-size: 72pt;
+    }
+
+    .title {
+    	font-size: 32pt; 
+    }
 }
 
 @media print, screen and (max-height: 600px) {

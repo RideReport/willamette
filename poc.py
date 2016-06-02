@@ -1,14 +1,18 @@
 import os
 import requests
 import dateutil.parser
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 import pytz
 import boto
 import json
 pacific = pytz.timezone('US/Pacific')
 
-def getrows():
-    response = requests.get('http://waterdata.usgs.gov/nwis/uv?cb_00010=on&cb_00060=on&cb_00065=on&cb_00095=on&cb_00055=on&cb_00300=on&cb_00400=on&cb_63680=on&cb_62361=on&cb_95204=on&cb_99137=on&cb_32295=on&format=rdb&site_no=14211720&period=&begin_date=2016-06-01&end_date=2016-06-01')
+def getrows(dt=None):
+    if dt is None:
+        dt = datetime.now(pacific)
+    url = 'http://waterdata.usgs.gov/nwis/uv?cb_00010=on&cb_00060=on&cb_00065=on&cb_00095=on&cb_00055=on&cb_00300=on&cb_00400=on&cb_63680=on&cb_62361=on&cb_95204=on&cb_99137=on&cb_32295=on&format=rdb&site_no=14211720&period=&begin_date={:%Y-%m-%d}&end_date={:%Y-%m-%d}'.format(dt - timedelta(days=5), dt)
+    response = requests.get(url)
     response.raise_for_status()
     header = None
     for line in response.text.splitlines():

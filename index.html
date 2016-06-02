@@ -15,8 +15,13 @@
 			 for (var key in data) {
 				var value = data[key];
 				var element = $( ".quality" );
+				
 				if (key == "ecoli") {
-					
+					// These thresholds are based on the values given by the WHO for 'Very Good', 'Good', 'Poor' and 'Very Poor' 
+					// water quality for swimming. The very poor value was lowered from 500 (given by the WHO) 
+					// to 406 (the maximum allowed value for safe swimming according to Oregon DEQ).
+					// Sources: http://www.who.int/water_sanitation_health/bathing/srwe1-chap4.pdf
+					// 			http://www.portlandoregon.gov/bes/article/390127
 					if (value < 41) {
 						element.append( "\<font color='#009a44'>very clean!\</font>" );
 					} else if (value <200 ) {
@@ -28,18 +33,23 @@
 					}
 				} else if (key == "ecoli_date") {
 					//
-				} else if (key == "temperature_celsius") {
+				} else if (key == "temperature_celcius") {
 					var element = $( ".temperature" );
+					var emoji_element = $( ".emoji" );
 					
 					var fahrenheit = (value * 1.8 + 32).toFixed(0);
 					if (fahrenheit < 55) { // nope nope nope
-						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉ 😲\</font>" );
+						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉\</font>" );
+						emoji_element.append("😲");
 					} else if (fahrenheit < 61 ) { // brrr
-						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉ 😬\</font>" );
+						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉\</font>" );
+						emoji_element.append("😬");
 					} else if (fahrenheit < 72 ) { // cool
-						element.append(fahrenheit + "℉ 😆");
+						element.append(fahrenheit + "℉");
+						emoji_element.append("😆");						
 					} else { // warm!
-						element.append(fahrenheit + "℉ 😎");
+						element.append(fahrenheit + "℉");
+						emoji_element.append("😎");						
 					} 
 				} else if (key == "temperature_date") {
 					//
@@ -51,16 +61,22 @@
   </head>
   <body>
     <div class="wrapper">
-      <sectio>
-		<div style="font-size: 24pt;">The Willamette River is</div>
-		<div class="temperature" style="font-size: 48pt;"> </div>
-		<div class="quality" style="font-size: 24pt;">and </div>
+      <header>
+		<div class="emoji" style="font-size: 64pt; text-align: center;"></div>
+		<div class="title" style="font-size: 24pt; text-align: center;">The Willamette is</div>
+		<div style="text-align: center;"> <span class="temperature" style="font-size: 48pt;"></span><span style="font-size: 24pt;"> and </span></div>
+		<div class="quality" style="font-size: 24pt; text-align: center;"></div>
       </header>
       <footer>
-  		<img width="100px" align="left" src="images/HAP_logo.jpg"/>
-          <p>Help support access to the Willamette by <a href="https://donate.humanaccessproject.com">donating to</a> the Human Access Project </p>
-        <p style="margin-left:100px;">This project is maintained by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
-</p>
+		<span style="float:left; text-align: center;">
+		<a href="https://donate.humanaccessproject.com">
+  		<img width="100px" src="images/HAP_logo.jpg"/><br/>
+		Donate!
+		</a>
+		</span>
+			<p style="margin-left:120px;">Isn't the Willamette kinda gnarly? <a href="http://www.humanaccessproject.com/about/willamette_river_water_quality">Nope.</a></p>
+        	<p style="margin-left:120px;">This site was created by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
+			 <p style="margin-left:120px;">Data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a> and <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a>.</p>
     </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>

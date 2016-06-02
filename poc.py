@@ -84,7 +84,7 @@ datafile.write("{")
 datafile.write("'temperature_celcius': {1:5}, 'temperature_date': {0},".format(*get_most_recent_dt_and_value(rows, '01_00010')))
 datafile.write("'turbidity': {1:5}, 'turbidity_date': {0},".format(*get_most_recent_dt_and_value(rows, '38_63680')))
 datafile.write("'cyanobacteria': {1:5}, 'cyanobacteria_date': {0},".format(*get_most_recent_dt_and_value(rows, '52_95204')))
-datafile.write("'ecoli': {ecoli:5}, 'ecoli_date': {name}, ecoli_site: {dt}".format(**ecoli))
+datafile.write("'ecoli': {ecoli:5}, 'ecoli_date': {dt}, ecoli_site: {name}".format(**ecoli))
 datafile.write("}")
 datafile.close()
 

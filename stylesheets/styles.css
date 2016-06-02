@@ -115,8 +115,17 @@ a:hover small {
 
 header {
   margin: auto;
-  width:400px;
+  width:60%;
   -webkit-font-smoothing:subpixel-antialiased;
+}
+
+.temperature {
+	font-size: 92pt;
+}
+
+.title {
+	font-size: 42pt; 
+	text-align: center;
 }
 
 .footer-wrapper {
@@ -192,6 +201,14 @@ footer a {
 
   pre, code {
     word-wrap:normal;
+  }
+  
+  .temperature {
+  	font-size: 72pt;
+  }
+
+  .title {
+  	font-size: 32pt; 
   }
 }
 

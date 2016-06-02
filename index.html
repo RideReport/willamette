@@ -3,37 +3,65 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Willamette by KnockSoftware</title>
+    <title>How's the River?</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+	  <script src="javascripts/jquery-1.12.4.min.js"></script>
+	  <script>
+		$(document).ready(function () {
+		 $.getJSON('https://s3-us-west-2.amazonaws.com/howsthewater/data.json', function (data) {
+			 for (var key in data) {
+				var value = data[key];
+				var element = $( ".quality" );
+				if (key == "ecoli") {
+					
+					if (value < 41) {
+						element.append( "\<font color='#009a44'>very clean!\</font>" );
+					} else if (value <200 ) {
+						element.append( "\<font color='#98e116'>clean.\</font>" );
+					} else if (value <406 ) {
+						element.append( "\<font color='#ecb713'>swimmable.\</font>" );
+					} else {
+						element.append( "\<font color='#cc0909'>not clean. Stay out!\</font>" );
+					}
+				} else if (key == "ecoli_date") {
+					//
+				} else if (key == "temperature_celsius") {
+					var element = $( ".temperature" );
+					
+					var fahrenheit = (value * 1.8 + 32).toFixed(0);
+					if (fahrenheit < 55) { // nope nope nope
+						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉ 😲\</font>" );
+					} else if (fahrenheit < 61 ) { // brrr
+						element.append( "\<font color='#436EEE'>" + fahrenheit + "℉ 😬\</font>" );
+					} else if (fahrenheit < 72 ) { // cool
+						element.append(fahrenheit + "℉ 😆");
+					} else { // warm!
+						element.append(fahrenheit + "℉ 😎");
+					} 
+				} else if (key == "temperature_date") {
+					//
+				}
+			  };
+		  });
+	  });
+	</script>
   </head>
   <body>
     <div class="wrapper">
-      <header>
-        <h1>Willamette</h1>
-        <p>How&#39;s the River?</p>
-
-        <p class="view"><a href="https://github.com/KnockSoftware/willamette">View the Project on GitHub <small>KnockSoftware/willamette</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/KnockSoftware/willamette/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/KnockSoftware/willamette/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/KnockSoftware/willamette">View On <strong>GitHub</strong></a></li>
-        </ul>
+      <sectio>
+		<div style="font-size: 24pt;">The Willamette is</div>
+		<div class="temperature" style="font-size: 48pt;"> </div>
+		<div class="quality" style="font-size: 24pt;">and </div>
       </header>
-      <section>
-        <p>This is a placeholder!</p>
-      </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/KnockSoftware">KnockSoftware</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+  		<img width="100px" align="left" src="images/HAP_logo.jpg"/>
+          <p>Help support access to the Willamette by <a href="https://donate.humanaccessproject.com">donating to</a> the Human Access Project </p>
+        <p style="margin-left:100px;">This project is maintained by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
+</p>
+    </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
     

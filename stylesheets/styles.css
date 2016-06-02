@@ -210,6 +210,14 @@ footer a {
     text-decoration:underline;
 }
 
+@media print, screen and (max-height: 800px) {
+    header, section {
+      float:none;
+      position:static;
+      width:auto;
+    }
+}
+
 @media print, screen and (max-height: 600px) {
     header, section {
       float:left;

@@ -55,7 +55,7 @@
 }
 
 body {
-  background-color: #fff;
+  background-color: #43a4ea;
   padding:50px;
   font: 14px/1.5 "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:white;
@@ -244,10 +244,17 @@ footer {
   width:400px;
   font-size: 12px;
   opacity: 0.8;
-  float:left;
   position:fixed;
   bottom:50px;
   -webkit-font-smoothing:subpixel-antialiased;
+}
+
+.footer_text {
+  margin-left:140px;	
+}
+
+.hap_logo {
+	width: 100px;
 }
 
 footer a {
@@ -262,7 +269,7 @@ footer a {
     margin:0;
   }
 
-  header, section, footer {
+  header, section {
     float:none;
     position:static;
     width:auto;
@@ -315,6 +322,24 @@ footer a {
 
   header ul {
     width:99%;
+  }
+  
+  
+  footer {
+	  margin: auto;
+	  bottom:10px;
+	  left: static;
+	  right: static;
+	  font-size: 10px;
+  }
+  
+  .footer_text {
+	  width:75%;
+	  margin-left:80px;	
+  }
+  
+  .hap_logo {
+  	width: 60px;
   }
 
   header li, header ul li + li + li {

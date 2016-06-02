@@ -1,7 +1,9 @@
+import os
 import requests
 import dateutil.parser
 from bs4 import BeautifulSoup
 import pytz
+import boto
 pacific = pytz.timezone('US/Pacific')
 
 def getrows():
@@ -76,7 +78,17 @@ marina = list(gen_bes_ecoli('http://www.portlandoregon.gov/bes/waterquality/resu
 from itertools import chain
 ecoli = max(chain(boathouse, morrison, marina), key=lambda r: (r['dt'], r['rank']))
 
-print "Temperature deg C: {1:5} ({0})".format(*get_most_recent_dt_and_value(rows, '01_00010'))
-print "Turbidity, FNU:    {1:5} ({0})".format(*get_most_recent_dt_and_value(rows, '38_63680'))
-print "Cyanobacteria:     {1:5} ({0})".format(*get_most_recent_dt_and_value(rows, '52_95204'))
-print "Ecoli:             {ecoli:5} ({dt} at {name})".format(**ecoli)
+datafile = open('data.json', 'w')
+
+datafile.write("{")
+datafile.write("'temperature_celcius': {1:5}, 'temperature_date': {0},".format(*get_most_recent_dt_and_value(rows, '01_00010')))
+datafile.write("'turbidity': {1:5}, 'turbidity_date': {0},".format(*get_most_recent_dt_and_value(rows, '38_63680')))
+datafile.write("'cyanobacteria': {1:5}, 'cyanobacteria_date': {0},".format(*get_most_recent_dt_and_value(rows, '52_95204')))
+datafile.write("'ecoli': {ecoli:5}, 'ecoli_date': {name}, ecoli_site: {dt}".format(**ecoli))
+datafile.write("}")
+datafile.close()
+
+s3 = boto.connect_s3()
+key = s3.get_bucket('howsthewater').new_key('data.json')
+key.set_contents_from_filename('data.json')
+key.set_acl('public-read')

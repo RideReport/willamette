@@ -7,7 +7,9 @@ A simple, single-serving site showing the current swimming conditions in the Wil
 
 # Data Sources:
 **E. Coli counts:** https://www.portlandoregon.gov/bes/waterquality/results.cfm
+
 **Temperature, cyanobacteria and turbidity** http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html
+
 **Algae bloom advisories** https://data.oregon.gov/resource/muwp-rr44.json
 
 # Calculations

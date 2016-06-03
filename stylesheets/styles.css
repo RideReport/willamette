@@ -123,6 +123,11 @@ header {
 	font-size: 92pt;
 }
 
+.warning {
+	font-size: 16pt;
+	text-align: center;
+}
+
 .title {
 	font-size: 42pt; 
 	text-align: center;
@@ -166,7 +171,7 @@ footer a {
     }
 
     .title {
-    	font-size: 32pt; 
+    	font-size: 22pt; 
     }
 }
 

@@ -244,3 +244,18 @@ footer a {
   	width: 60px;
   }
 }
+
+@media print, screen and (max-width: 340px) {
+	.emoji {
+		width: 80px;
+	}
+	
+	.temperature {
+		font-size: 52pt;
+	}
+
+	.title {
+		font-size: 24pt; 
+		text-align: center;
+	}
+}

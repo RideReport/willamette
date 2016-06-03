@@ -170,20 +170,6 @@ footer a {
     }
 }
 
-@media print, screen and (max-height: 600px) {
-    .header-wrapper {
-      float:left;
-	  right: 40px;
-      position:static;
-    }
-	
-	.footer-wrapper {
-        position:static;
-		float: right;
-        width: 380px;
-	}
-}
-
 @media print, screen and (max-width: 960px) {
   div.wrapper {
     width:auto;
@@ -198,7 +184,7 @@ footer a {
 
 }
 
-@media print, screen and (max-width: 720px) {
+@media print, screen and (max-width: 760px) {
   body {
     word-wrap:break-word;
   }
@@ -232,6 +218,26 @@ footer a {
   .footer_text {
 	  margin-left:80px;	
       width: 300px;
+  }
+  
+  .hap_logo {
+  	width: 60px;
+  }
+}
+
+@media print, screen and (max-width: 380px) {
+  body {
+    padding:15px;
+  }
+  
+  p {
+      margin-top: 0.3em;
+	  margin-bottom: 0.3em;
+  }
+  
+  .footer_text {
+	  margin-left:80px;	
+      width: 240px;
   }
   
   .hap_logo {

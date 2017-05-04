@@ -80,11 +80,7 @@ def gen_bes_ecoli(url, rank=0):
         }
 
 def get_nearby_algae_bloom_advisories():
-    if datetime.now().year != 2016:
-        return [{
-            'issued_description': 'Unknown! API needs to be updated for curent year.',
-        }]
-
+    # info https://data.oregon.gov/Recreation/Algae-Bloom-Advisories/hhdb-h5ge
     with open(os.path.join(SCRIPT_DIR, 'willamette-zone.wkt')) as f:
         poly_wkt = f.read()
     url = 'https://data.oregon.gov/resource/muwp-rr44.json'

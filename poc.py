@@ -109,9 +109,9 @@ ecoli_history = sorted(chain(boathouse, morrison, marina), key=lambda r: (r['dt'
 ecoli = ecoli_history[0]
 
 
-k_TC = '01_00010'
-k_tb = '38_63680'
-k_cy = '52_95204'
+k_TC = '172755_00010'
+k_tb = '172757_63680'
+k_cy = '173554_95204'
 TCdt, TC = get_most_recent_dt_and_value(rows, k_TC)
 tbdt, tb = get_most_recent_dt_and_value(rows, k_tb)
 cydt, cy = get_most_recent_dt_and_value(rows, k_cy)

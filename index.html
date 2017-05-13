@@ -21,41 +21,52 @@
 	</script>
 	  <script>
 		$(document).ready(function () {
-		 $.getJSON('https://api.myjson.com/bins/liozx', function (data) {
+		 $.getJSON('https://s3-us-west-2.amazonaws.com/howsthewater/data.json', function (data) {
 			 var temperature_fahrenheit;
 			 var ecoli_count;
+       var ecoli_date;
+       var temperature_date;
+       var generated_date;
 			 var algae_bloom_advisories_count = 0;
-			 
+       var ecoli_last_updated_text = "";
+       var temperature_last_updated_text = "";
+       var algae_last_updated_text = ""; //need to fetch a good algae bloom date in script
+
 			 for (var key in data) {
-				
+
 				if (key == "ecoli") {
-					// These thresholds are based on the values given by the WHO for 'Very Good', 'Good', 'Poor' and 'Very Poor' 
-					// water quality for swimming. The very poor value was lowered from 500 (given by the WHO) 
+					// These thresholds are based on the values given by the WHO for 'Very Good', 'Good', 'Poor' and 'Very Poor'
+					// water quality for swimming. The very poor value was lowered from 500 (given by the WHO)
 					// to 406 (the maximum allowed value for safe swimming according to Oregon DEQ).
 					// Sources: http://www.who.int/water_sanitation_health/bathing/srwe1-chap4.pdf
 					// 			http://www.portlandoregon.gov/bes/article/390127
 					ecoli_count = data[key];
 				} else if (key == "ecoli_date") {
-					//
-				} else if (key == "temperature_celsius") {					
+					ecoli_date = data[key];
+          ecoli_last_updated_text += ecoli_date.substring(0,10);
+				} else if (key == "temperature_celsius") {
 					temperature_fahrenheit = (data[key] * 1.8 + 32).toFixed(0);
 				} else if (key == "temperature_date") {
-					//
+          temperature_date = data[key];
+          temperature_last_updated_text += temperature_date.substring(0,10);
 				} else if (key == "algae_bloom_advisories") {
-					algae_bloom_advisories_count = data[key].length
+					algae_bloom_advisories_count = data[key].length;
+				} else if (key == "generated_date") {
+          generated_date = data[key];
+          algae_last_updated_text += generated_date.substring(0,10); //update once algae bloom date added to script
 				}
 			  };
-			
+
 			var temperature_text = ""
 			var emoji_image_src = ""
 			if (temperature_fahrenheit < 55) { // nope nope nope
 				temperature_text = "freezing";
 				emoji_image_src = "images/face4.png";
 			} else if (temperature_fahrenheit < 61) { // brrr
-				temperature_text = "cold";				
+				temperature_text = "cold";
 				emoji_image_src = "images/face3.png";
 			} else if (temperature_fahrenheit < 72 ) { // cool
-				temperature_text = "cool";				
+				temperature_text = "cool";
 				emoji_image_src = "images/face2.png";
 			} else { // warm!
 				temperature_text = "warm";
@@ -65,28 +76,31 @@
 			if (algae_bloom_advisories_count > 0) {
 				emoji_image_src = "images/face3.png"
 				quality_element.append( "but may not be fit for swimming" );
-				$('body').css({"background-color": '#cc0909'});												
+				$('body').css({"background-color": '#cc0909'});
 				$('.warning').append( "An \<a href='https://public.health.oregon.gov/HealthyEnvironments/Recreation/HarmfulAlgaeBlooms/Pages/Blue-GreenAlgaeAdvisories.aspx'>algae bloom advisory\</a\> is in effect" );
 			} else if (ecoli_count < 41) {
 				quality_element.append( "and fresh" );
-				$('body').css({"background-color": '#43a4ea'});						
+				$('body').css({"background-color": '#43a4ea'});
 			} else if (ecoli_count <200 ) {
 				quality_element.append( "and swimmable" );
-				$('body').css({"background-color": '#2ECE9A'});						
+				$('body').css({"background-color": '#2ECE9A'});
 			} else if (ecoli_count <406 ) {
-				emoji_image_src = "images/face3.png"				
+				emoji_image_src = "images/face3.png"
 				quality_element.append( "but a bit funky" );
-				$('body').css({"background-color": '#A4CE2E'});						
+				$('body').css({"background-color": '#A4CE2E'});
 			} else {
 				emoji_image_src = "images/face4.png"
 				quality_element.append( "but not fit for swimming" );
-				$('body').css({"background-color": '#cc0909'});												
+				$('body').css({"background-color": '#cc0909'});
 			}
-			
-			
+
+
 			$( ".emoji" ).attr("src", emoji_image_src);
 			$(".temperature").append(temperature_fahrenheit + "℉");
 			$(".temperature_text").append(temperature_text);
+      $(".ecoli_last_updated_text").append(ecoli_last_updated_text);
+      $(".temperature_last_updated_text").append(temperature_last_updated_text);
+      $(".algae_last_updated_text").append(algae_last_updated_text);
 		  });
 	  });
 	</script>
@@ -112,12 +126,14 @@
 		<div class="footer_text">
 			<p>Isn't the Willamette kinda gnarly? <a href="http://www.humanaccessproject.com/about/willamette_river_water_quality">Nope.</a></p>
         	<p>This site was created by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
-			 <p>Temperature and bacteria data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a>, <a href="https://public.health.oregon.gov/HealthyEnvironments/Recreation/HarmfulAlgaeBlooms/Pages/Blue-GreenAlgaeAdvisories.aspx">OHA</a> and <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a>.</p>
+			 <p>Temperature data gathered from <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a> as of <span class="temperature_last_updated_text"></span>.
+         Bacteria data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a> as of <span class="ecoli_last_updated_text"></span>
+         and <a href="https://public.health.oregon.gov/HealthyEnvironments/Recreation/HarmfulAlgaeBlooms/Pages/Blue-GreenAlgaeAdvisories.aspx">OHA</a> as of <span class="algae_last_updated_text"></span>.</p>
 		 </div>
     </footer>
 	</span>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
   </body>
 </html>

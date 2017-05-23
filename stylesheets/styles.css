@@ -129,7 +129,7 @@ header {
 }
 
 .title {
-	font-size: 42pt; 
+	font-size: 42pt;
 	text-align: center;
 }
 
@@ -137,6 +137,10 @@ header {
 	position: fixed;
     bottom:10px;
 	width: 100%;
+}
+
+.temperature_last_updated_text {
+    font-weight: bold;
 }
 
 footer {
@@ -147,7 +151,7 @@ footer {
 }
 
 .footer_text {
-  margin-left:140px;	
+  margin-left:140px;
 }
 
 .hap_logo {
@@ -165,13 +169,13 @@ footer a {
       position:static;
       width:auto;
     }
-	
+
     .temperature {
     	font-size: 72pt;
     }
 
     .title {
-    	font-size: 22pt; 
+    	font-size: 22pt;
     }
 }
 
@@ -201,13 +205,13 @@ footer a {
   pre, code {
     word-wrap:normal;
   }
-  
+
   .temperature {
   	font-size: 72pt;
   }
 
   .title {
-  	font-size: 32pt; 
+  	font-size: 32pt;
   }
 }
 
@@ -219,12 +223,12 @@ footer a {
   footer {
 	  font-size: 10px;
   }
-  
+
   .footer_text {
-	  margin-left:80px;	
+	  margin-left:80px;
       width: 300px;
   }
-  
+
   .hap_logo {
   	width: 60px;
   }
@@ -234,17 +238,17 @@ footer a {
   body {
     padding:15px;
   }
-  
+
   p {
       margin-top: 0.3em;
 	  margin-bottom: 0.3em;
   }
-  
+
   .footer_text {
-	  margin-left:80px;	
+	  margin-left:80px;
       width: 240px;
   }
-  
+
   .hap_logo {
   	width: 60px;
   }
@@ -254,13 +258,13 @@ footer a {
 	.emoji {
 		width: 80px;
 	}
-	
+
 	.temperature {
 		font-size: 52pt;
 	}
 
 	.title {
-		font-size: 24pt; 
+		font-size: 24pt;
 		text-align: center;
 	}
 }

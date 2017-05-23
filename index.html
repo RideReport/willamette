@@ -43,17 +43,17 @@
 					ecoli_count = data[key];
 				} else if (key == "ecoli_date") {
 					ecoli_date = data[key];
-          ecoli_last_updated_text += ecoli_date.substring(0,10);
+          ecoli_last_updated_text += ecoli_date.substring(5,10);
 				} else if (key == "temperature_celsius") {
 					temperature_fahrenheit = (data[key] * 1.8 + 32).toFixed(0);
 				} else if (key == "temperature_date") {
           temperature_date = data[key];
-          temperature_last_updated_text += temperature_date.substring(0,10);
+          temperature_last_updated_text += temperature_date.substring(11,16) + " on " + temperature_date.substring(5,10);
 				} else if (key == "algae_bloom_advisories") {
 					algae_bloom_advisories_count = data[key].length;
 				} else if (key == "generated_date") {
           generated_date = data[key];
-          algae_last_updated_text += generated_date.substring(0,10); //update once algae bloom date added to script
+          algae_last_updated_text += generated_date.substring(5,10); //update once algae bloom date added to script
 				}
 			  };
 
@@ -125,10 +125,11 @@
 		</span>
 		<div class="footer_text">
 			<p>Isn't the Willamette kinda gnarly? <a href="http://www.humanaccessproject.com/about/willamette_river_water_quality">Nope.</a></p>
-        	<p>This site was created by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
-			 <p>Temperature data gathered from <a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS</a> as of <span class="temperature_last_updated_text"></span>.
-         Bacteria data gathered from <a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES</a> as of <span class="ecoli_last_updated_text"></span>
-         and <a href="https://public.health.oregon.gov/HealthyEnvironments/Recreation/HarmfulAlgaeBlooms/Pages/Blue-GreenAlgaeAdvisories.aspx">OHA</a> as of <span class="algae_last_updated_text"></span>.</p>
+			 <p><a href="http://or.water.usgs.gov/will_morrison/monitors/will_morrison_t_7.html">USGS temperature data</a> measured at <span class="temperature_last_updated_text"></span>.</p>
+         <p><a href="https://www.portlandoregon.gov/bes/waterquality/results.cfm">BES Bacteria data</a> measured on <span class="ecoli_last_updated_text"></span>
+         and <a href="https://public.health.oregon.gov/HealthyEnvironments/Recreation/HarmfulAlgaeBlooms/Pages/Blue-GreenAlgaeAdvisories.aspx">OHA Algae Bloom Advisories</a> on <span class="algae_last_updated_text"></span>.</p>
+         <p>This site was created by <a href="https://twitter.com/evanheidtmann">@evanheidtmann</a> and <a href="https://twitter.com/quicklywilliam">@quicklywilliam</a>. Read and Edit the Code on <a href="https://github.com/KnockSoftware/willamette">GitHub</a>.</p>
+
 		 </div>
     </footer>
 	</span>
